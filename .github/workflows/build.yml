@@ -21,13 +21,8 @@ jobs:
           distribution: temurin
           java-version: '11'
 
-      - name: Setup Android SDK
-        uses: r0adkll/setup-android@v2
-        with:
-          api-level: 33
-          build-tools: '33.0.2'
-          target: android-33
-          cache: gradle
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
 
       - name: Accept Android SDK licenses
         run: yes | sdkmanager --licenses
@@ -57,4 +52,3 @@ jobs:
         with:
           name: KASIR
           path: app/build/outputs/apk/debug/KASIR.apk
-          
