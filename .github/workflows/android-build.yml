@@ -27,7 +27,8 @@ jobs:
         working-directory: ./KASIR
         run: chmod +x ./gradlew
 
-      - name: Build Debug APK
+      - name: Build Debug APK 
+         working-directory: ./KASIR
         run: ./gradlew assembleDebug --no-daemon --stacktrace
 
       - name: Rename APK to Kasir.apk
