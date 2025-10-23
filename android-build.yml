@@ -1,0 +1,43 @@
+name: Android CI - Build APK
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Grant execute permission for gradlew
+        working-directory: ./KASIR
+        run: chmod +x ./gradlew
+
+      - name: Build Debug APK
+        working-directory: ./KASIR
+        run: ./gradlew assembleDebug --no-daemon --stacktrace
+
+      - name: Rename APK to Kasir.apk
+        working-directory: ./KASIR/app/build/outputs/apk/debug
+        run: |
+          for f in *.apk; do mv "$f" Kasir.apk || true; done
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Kasir
+          path: KASIR/app/build/outputs/apk/debug/Kasir.apk
