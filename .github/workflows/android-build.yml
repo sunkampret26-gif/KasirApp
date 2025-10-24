@@ -23,7 +23,14 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Generate Gradle Wrapper (Gradle 7.6)
+      # ✅ Install Gradle 7.6 specifically
+      - name: Set up Gradle 7.6
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: 7.6
+
+      # ✅ Wrapper dibuat lengkap (gradlew + jar)
+      - name: Generate Gradle Wrapper
         working-directory: ./KASIR
         run: gradle wrapper --gradle-version 7.6
 
