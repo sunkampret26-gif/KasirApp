@@ -23,11 +23,15 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
+      - name: Generate Gradle Wrapper
+        run: gradle wrapper
+        working-directory: ./KASIR
+
       - name: Grant execute permission for gradlew
         working-directory: ./KASIR
         run: chmod +x ./gradlew
 
-      - name: Build Debug APK 
+      - name: Build Debug APK
         working-directory: ./KASIR
         run: ./gradlew assembleDebug --no-daemon --stacktrace
 
@@ -36,8 +40,8 @@ jobs:
         run: |
           for f in *.apk; do mv "$f" Kasir.apk || true; done
 
-      - name: Upload APK artifact
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: Kasir
-          path: KASIR/app/build/outputs/apk/debug/Kasir.apk
+          name: Kasir.apk
+          path: ./KASIR/app/build/outputs/apk/debug/Kasir.apk
