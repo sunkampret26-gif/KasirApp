@@ -23,11 +23,15 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
+      - name: Generate Gradle Wrapper (Gradle 7.6)
+        working-directory: ./KASIR
+        run: gradle wrapper --gradle-version 7.6
+
       - name: Grant execute permission for gradlew
         working-directory: ./KASIR
         run: chmod +x ./gradlew
 
-      - name: Use Gradle Wrapper Version Check
+      - name: Check Gradle Version
         working-directory: ./KASIR
         run: ./gradlew --version
 
